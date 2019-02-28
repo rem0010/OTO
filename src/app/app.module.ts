@@ -10,6 +10,10 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AudioProvider } from '../providers/audio/audio';
+import { CloudProvider } from '../providers/cloud/cloud';
+import { StoreModule } from '@ngrx/store';
+import { mediaStateReducer } from '../providers/store';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    StoreModule.forRoot({
+      appStore: mediaStateReducer
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +41,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AudioProvider,
+    CloudProvider
   ]
 })
 export class AppModule {}
