@@ -1,49 +1,42 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-
-import { StatusBar } from '@ionic-native/status-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'; 
+import { StoreModule } from '@ngrx/store';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
+import { mediaStateReducer } from '../providers/store';
 import { AudioProvider } from '../providers/audio/audio';
 import { CloudProvider } from '../providers/cloud/cloud';
-import { StoreModule } from '@ngrx/store';
-import { mediaStateReducer } from '../providers/store';
+
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { AuthService } from '../providers/auth0/auth.service';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
+  declarations: [MyApp, HomePage],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    BrowserAnimationsModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
     StoreModule.forRoot({
-      appStore: mediaStateReducer
-    })
+      appState: mediaStateReducer
+    }),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
+  entryComponents: [MyApp, HomePage],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     AudioProvider,
-    CloudProvider
+    CloudProvider,
+    AuthService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}
