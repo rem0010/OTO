@@ -88,5 +88,6 @@
         <variable name="ANDROID_HOST" value="{YOUR_AUTH0_DOMAIN}" />
         <variable name="ANDROID_PATHPREFIX" value="/cordova/{YOUR_PACKAGE_ID}/callback" />
     </plugin>
+    <engine name="ios" spec="~4.5.5" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="1.5.4" />
 </widget>
